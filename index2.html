@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Pollution Monitoring System</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600&display=swap');
+        
+        * {
+            font-family: 'Inter', system_ui, sans-serif;
+        }
+        
+        .header-font {
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        .map-container {
+            background: #f8f4eb;
+            border: 4px solid #e5d9c8;
+        }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-900">
+
+    <!-- HEADER -->
+    <header class="h-16 bg-[#1e3a8a] flex items-center px-6 text-white">
+        <div class="flex items-center gap-3">
+            <div class="w-9 h-9 bg-white rounded-2xl flex items-center justify-center text-[#1e3a8a] font-bold text-2xl">+</div>
+            <h1 class="header-font text-2xl tracking-tight">AI Pollution Monitoring System</h1>
+        </div>
+        <div class="ml-auto flex items-center gap-3">
+            <div class="px-5 py-1.5 bg-white/10 rounded-3xl text-sm flex items-center gap-2">
+                👤 Welcome, Admin
+            </div>
+        </div>
+    </header>
+
+    <div class="flex h-[calc(100vh-64px)]">
+
+        <!-- SIDEBAR -->
+        <div class="w-16 bg-[#132a5e] py-8 flex flex-col items-center gap-9 text-white">
+            <div class="w-9 h-9 bg-[#1e3a8a] rounded-3xl flex items-center justify-center text-xl cursor-pointer">▶</div>
+            <div class="w-9 h-9 bg-[#1e3a8a] rounded-3xl flex items-center justify-center text-xl cursor-pointer">🏠</div>
+            <div class="w-9 h-9 bg-[#1e3a8a] rounded-3xl flex items-center justify-center text-xl cursor-pointer">📊</div>
+            <div class="w-9 h-9 bg-[#1e3a8a] rounded-3xl flex items-center justify-center text-xl cursor-pointer mt-auto">⚙️</div>
+        </div>
+
+        <!-- MAIN CONTENT -->
+        <div class="flex-1 p-6 bg-[#f1f5f9] overflow-auto">
+
+            <!-- TOP BAR -->
+            <div class="bg-white rounded-3xl px-8 py-5 mb-6 flex items-center justify-between shadow">
+                <h2 class="text-3xl font-semibold">Pollution Levels in Delhi</h2>
+                
+                <div class="flex gap-6">
+                    <div class="flex items-center gap-2 bg-red-50 px-6 py-2 rounded-full text-red-700 text-sm font-medium">
+                        <div class="w-3.5 h-3.5 bg-red-500 rounded-full"></div> Hazardous
+                    </div>
+                    <div class="flex items-center gap-2 bg-orange-50 px-6 py-2 rounded-full text-orange-700 text-sm font-medium">
+                        <div class="w-3.5 h-3.5 bg-orange-500 rounded-full"></div> Moderate
+                    </div>
+                    <div class="flex items-center gap-2 bg-green-50 px-6 py-2 rounded-full text-green-700 text-sm font-medium">
+                        <div class="w-3.5 h-3.5 bg-green-500 rounded-full"></div> Safe Areas
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-10">
+                    <div>
+                        <div class="text-xs text-slate-500">Avg. AQI Today</div>
+                        <div class="text-5xl font-bold text-slate-800">185</div>
+                    </div>
+                    <div>
+                        <div class="text-xs text-slate-500">Most Polluted</div>
+                        <div class="text-red-600 font-semibold">Rohini Sector 16</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TWO-COLUMN LAYOUT: Left (Map + Charts) | Right (Recommendations) -->
+            <div class="grid grid-cols-12 gap-6">
+
+                <!-- LEFT COLUMN (~65%) - Map on top + Charts below -->
+                <div class="col-span-7 flex flex-col gap-6">
+                    
+                    <!-- Map Container -->
+                    <div class="map-container rounded-3xl h-[460px] relative overflow-hidden">
+                        <div class="absolute inset-0 flex items-center justify-center flex-col text-slate-400">
+                            <div class="text-7xl mb-4">🗺️</div>
+                            <p class="text-xl font-medium">Map Container</p>
+                            <p class="text-xs mt-1">LEFT EMPTY — Add your actual map here</p>
+                        </div>
+                        <!-- City labels -->
+                        <div class="absolute top-14 left-1/4 text-red-600/50 font-medium">Rohini</div>
+                        <div class="absolute top-32 left-2/5 text-orange-600/50 font-medium">Dwarka</div>
+                        <div class="absolute bottom-40 right-1/3 text-red-600/50 font-medium">Anand Vihar</div>
+                        <div class="absolute top-1/2 left-1/4 text-red-600/50 font-medium">Mucha</div>
+                    </div>
+
+                    <!-- Charts Section - Same width as Map -->
+                    <div class="bg-white rounded-3xl p-6 shadow flex-1">
+                        <h3 class="font-semibold text-xl mb-6">Charts</h3>
+                        
+                        <div class="grid grid-cols-3 gap-6">
+                            <!-- AQI Trend -->
+                            <div>
+                                <h4 class="font-medium text-sm mb-3">AQI Trend</h4>
+                                <div class="h-64 bg-slate-50 border border-dashed border-slate-300 rounded-2xl flex items-center justify-center text-6xl text-slate-300">
+                                    📈
+                                </div>
+                            </div>
+                            
+                            <!-- Area Wise Pollution -->
+                            <div>
+                                <h4 class="font-medium text-sm mb-3">Area Wise Pollution</h4>
+                                <div class="h-64 bg-slate-50 border border-dashed border-slate-300 rounded-2xl flex items-center justify-center text-6xl text-slate-300">
+                                    📊
+                                </div>
+                            </div>
+                            
+                            <!-- Pollution Distribution -->
+                            <div>
+                                <h4 class="font-medium text-sm mb-3">Pollution Distribution</h4>
+                                <div class="h-64 bg-slate-50 border border-dashed border-slate-300 rounded-2xl flex items-center justify-center text-6xl text-slate-300">
+                                    🥧
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- RIGHT COLUMN (~35%) - Recommendations only (tall) -->
+                <div class="col-span-5">
+                    <div class="bg-white rounded-3xl p-6 shadow h-full flex flex-col">
+                        <h3 class="font-semibold text-xl mb-6">Recommendations</h3>
+                        
+                        <!-- Hazardous Zone Alert -->
+                        <div class="bg-red-50 rounded-3xl p-6 mb-6">
+                            <div class="flex gap-4">
+                                <span class="text-3xl">⚠️</span>
+                                <div class="flex-1">
+                                    <div class="font-semibold text-red-700">Hazardous Zone Alert</div>
+                                    <div class="text-red-600 text-sm">Area: Rohini Sector 16</div>
+                                    <div class="text-red-700 text-4xl font-bold mt-1">325</div>
+                                    <div class="text-xs text-red-600">AQI</div>
+                                    <ul class="mt-5 space-y-1 text-sm text-red-700">
+                                        <li>• Wear N95 mask</li>
+                                        <li>• Avoid outdoor exercise</li>
+                                        <li>• Use air purifier indoors</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Moderate Pollution -->
+                        <div class="bg-orange-50 rounded-3xl p-6">
+                            <div class="flex gap-4">
+                                <span class="text-3xl">⚠️</span>
+                                <div class="flex-1">
+                                    <div class="font-semibold text-orange-700">Moderate Pollution</div>
+                                    <div class="text-orange-600 text-sm">Area: Dwarka</div>
+                                    <ul class="mt-5 space-y-1 text-sm text-orange-700">
+                                        <li>• Limit outdoor activity</li>
+                                        <li>• Carpool or use public transport</li>
+                                        <li>• Monitor AQI levels</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Last Updated -->
+                        <div class="mt-auto pt-6">
+                            <div class="bg-white border border-slate-200 px-6 py-3 rounded-3xl flex items-center gap-2 text-sm w-fit">
+                                <div class="w-2.5 h-2.5 bg-green-400 rounded-full animate-pulse"></div>
+                                Last Updated: 10:45 AM
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</body>
+</html>
